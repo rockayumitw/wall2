@@ -39,10 +39,14 @@ const posts = {
     },
     // 刪除 -單筆
     async deleteQuery(req, res) {
-        const id = req.params.id
-        const result = await Post.findByIdAndDelete(id);
-        const posts = await Post.find();
-        result == null ? handleError(res, '無此筆id') : handleSuccess(res, posts, "刪除成功")
+        try{
+            const id = req.params.id
+            const result = await Post.findByIdAndDelete(id);
+            const posts = await Post.find();
+            result == null ? handleError(res, '無此筆id') : handleSuccess(res, posts, "刪除成功")
+        } catch(error) {
+            if(error.messageFormat == undefined) handleError(res, '無此筆id')
+        }
     },
     // 編輯 -單筆
     async editQuery(req, res) {
@@ -59,7 +63,6 @@ const posts = {
             if(posts == null) handleError(res)
             else handleSuccess(res, posts)
         } catch (error) {
-            console.log()
             if(error.messageFormat == undefined) handleError(res, '無此筆id')
         }
     }
