@@ -45,18 +45,23 @@ const posts = {
         result == null ? handleError(res, '無此筆id') : handleSuccess(res, posts, "刪除成功")
     },
     // 編輯 -單筆
-    async editQuery() {
-        const id = req.params.id
-        const data = req.body
-        const arg = ['name', 'tags', 'type', 'content']
-        const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
-        if(result.length > 0) {
-            handleError(res);
-            return;
+    async editQuery(req, res) {
+        try {
+            const id = req.params.id
+            const data = req.body
+            const arg = ['name', 'tags', 'type', 'content']
+            const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
+            if(result.length > 0) {
+                handleError(res);
+                return;
+            }
+            const posts = await Post.findByIdAndUpdate(id, data, { new: true});
+            if(posts == null) handleError(res)
+            else handleSuccess(res, posts)
+        } catch (error) {
+            console.log()
+            if(error.messageFormat == undefined) handleError(res, '無此筆id')
         }
-        const posts = await Post.findByIdAndUpdate(id, data, { new: true});
-        if(posts == null) handleError(res)
-        else handleSuccess(res, posts)
     }
 }
 
