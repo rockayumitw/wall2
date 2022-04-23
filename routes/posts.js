@@ -16,6 +16,6 @@ router.delete('/', async (req, res, next) => postsController.delete(req, res))
 router.delete('/:id', async (req, res, next) => postsController.deleteQuery(req, res))
 
 // 編輯
-router.patch('/:id', async(req, res, next) => postsController.deleteQuery(req, res))
+router.patch('/:id', async(req, res, next) => postsController.editQuery(req, res))
 
 module.exports = router;
