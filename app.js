@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
@@ -16,8 +17,8 @@ const DB = process.env.DATABASE.replace(
 
 // 連結資料庫
 mongoose
-//    .connect('mongodb://localhost:27017/wall') // 本機端
-  .connect(DB)
+  .connect('mongodb://localhost:27017/wall') // 本機端
+  //.connect(DB)
   .then(() => console.log('資料庫連接成功')).catch((err) => consle.log('資料庫連結失敗,' + e));
 
 // 載入router
@@ -27,6 +28,7 @@ var app = express();
 
 // 載入設定檔
 app.use(logger('dev'));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
