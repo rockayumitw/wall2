@@ -38,8 +38,17 @@
 		{
 			"name": "取得所有列表",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"\",\r\n    \"sort\": \"-1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "https://fathomless-taiga-19978.herokuapp.com/posts",
 					"protocol": "https",
@@ -62,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"哈囉2\",\r\n    \"tags\": \"tag1\",\r\n    \"type\": \"person\",\r\n    \"content\": \"哈囉 你好2\"\r\n}",
+					"raw": "{\r\n    \"user_id\": \"6273edda00b09a7c5d39abb4\",\r\n    \"tags\": \"tag1\",\r\n    \"type\": \"person\",\r\n    \"content\": \"哈囉 你好2\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +79,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://fathomless-taiga-19978.herokuapp.com/posts",
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/posts/create",
 					"protocol": "https",
 					"host": [
 						"fathomless-taiga-19978",
@@ -78,7 +87,8 @@
 						"com"
 					],
 					"path": [
-						"posts"
+						"posts",
+						"create"
 					]
 				}
 			},
@@ -129,6 +139,147 @@
 					"path": [
 						"posts",
 						"626429c44d9d1b67c3719bed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "撈取使用者列表",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"fathomless-taiga-19978",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增使用者",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"哈囉\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"fathomless-taiga-19978",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "新增留言",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user_id\":\"6273edda00b09a7c5d39abb4\",\r\n    \"post_id\":\"6273f0b13b03fd6017326b4a\",\r\n    \"content\":\"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/replies",
+					"protocol": "https",
+					"host": [
+						"fathomless-taiga-19978",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"replies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "撈取單筆使用者資料",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/users/6273edda00b09a7c5d39abb4",
+					"protocol": "https",
+					"host": [
+						"fathomless-taiga-19978",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"6273edda00b09a7c5d39abb4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "編輯單筆使用者資料",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"哈囉2\",\r\n    \"email\": \"test@test.com\",\r\n    \"sex\": \"女\",\r\n    \"password\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/users/6273edda00b09a7c5d39abb4",
+					"protocol": "https",
+					"host": [
+						"fathomless-taiga-19978",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"6273edda00b09a7c5d39abb4"
 					]
 				}
 			},
