@@ -7,7 +7,7 @@ const postsController = require('../controllers/posts');
 router.post('/', async (req, res, next) => postsController.get(req, res));
 
 // 新增
-router.post('/', async (req, res, next) => postsController.create(req, res));
+router.post('/create', async (req, res, next) => postsController.create(req, res));
 
 // 刪除 -全部
 router.delete('/', async (req, res, next) => postsController.delete(req, res))

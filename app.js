@@ -17,8 +17,8 @@ const DB = process.env.DATABASE.replace(
 
 // 連結資料庫
 mongoose
-  //.connect('mongodb://localhost:27017/wall') // 本機端
-  .connect(DB)
+  .connect('mongodb://localhost:27017/wall') // 本機端
+  // .connect(DB)
   .then(() => console.log('資料庫連接成功')).catch((err) => consle.log('資料庫連結失敗,' + e));
 
 // 載入router
