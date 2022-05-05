@@ -3,24 +3,57 @@ const handleError = require('../handles/errorHandle');
 
 // model 載入
 const Post = require('../models/posts');
+const User = require('../models/users');
+const Replies = require('../models/replies');
 
 const posts = {
     // 取得列表
     async get(req, res) {
-        const data = await Post.find();
-        handleSuccess(res, data, "撈取成功")
+        // populate => 合併user欄位資料
+        // select => 要顯示哪幾筆資料
+        try{
+            let sort = req.body.sort;
+            let search = req.body.content;
+            let data = '';
+            if(sort == undefined) sort = -1
+            if(search == undefined) search = ''
+            if(search == '') {
+                data = await Post.find().sort({createAt: sort}).populate({
+                    path: 'user',
+                    select: 'name image sex'
+                }).populate({
+                    path: 'replies',
+                    select: 'user content'
+                });
+            } else {
+                data = await Post.find({
+                    content: {$regex: search}
+                }).sort({createAt: sort}).populate({
+                    path: 'user',
+                    select: 'name image sex'
+                }).populate({
+                    path: 'replies',
+                    select: 'user content'
+                });
+            }
+            handleSuccess(res, data, "撈取成功")
+        } catch(err) {
+            console.log(err)
+            handleError(res, err.message);
+        } 
     },
     // 新增
     async create(req, res) {
         const data = req.body
-        const arg = ['name', 'tags', 'type', 'content']
+        console.log(data)
+        const arg = ['user_id', 'tags', 'type', 'content']
         const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
         if(result.length > 0) {
-            handleError(res);
+            handleError(res, `${result.toString()} 欄位不正確`);
             return;
         }
         const post = await Post.create({
-            name: data.name,
+            user: data.user_id,
             tags: data.tags,
             type: data.type,
             image: data.image,
@@ -56,7 +89,7 @@ const posts = {
             const arg = ['name', 'tags', 'type', 'content']
             const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
             if(result.length > 0) {
-                handleError(res);
+                handleError(res, `${result.toString()} 欄位不正確`);
                 return;
             }
             const posts = await Post.findByIdAndUpdate(id, data, { new: true});

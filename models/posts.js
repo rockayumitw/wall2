@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 const postsSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, '貼文姓名未填寫']
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: [true, '姓名未填寫']
+  },
+  replies: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Replies',
+    required: [false, '']
   },
   tags: [
     {
@@ -22,7 +28,6 @@ const postsSchema = new mongoose.Schema({
   createAt: {
     type: Date,
     default: Date.now,
-    select: false
   },
   content: {
     type: String,

@@ -23,6 +23,8 @@ mongoose
 
 // 載入router
 const postRouter = require('./routes/posts');
+const userRouter = require('./routes/users');
+const replyRouter = require('./routes/replies');
 
 var app = express();
 
@@ -36,16 +38,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 使用路由
 app.use('/posts', postRouter);
+app.use('/users', userRouter);
+app.use('/replies', replyRouter);
 
 // 找不到頁面
 app.use((req, res, next) => {
-    res.status(404).send('無此頁面')
+    res.status(404).json({
+      status: 'error',
+      message: "無此頁面資訊",
+    });
 })
 
 // 程式錯誤
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('程式碼有些問題, 請稍後嘗試')
+    res.status(500).json({
+      status: 'error',
+      message: '系統錯誤，請恰系統管理員'
+    });
 })
 
 module.exports = app;
