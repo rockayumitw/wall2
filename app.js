@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const swaggerUI = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
 
 // env
 dotenv.config({path: './config.env'});
@@ -40,6 +42,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 app.use('/replies', replyRouter);
+
+// swagger 文件
+// 參數: 路徑、server、設定的檔案
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 // 找不到頁面
 app.use((req, res, next) => {

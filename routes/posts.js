@@ -4,6 +4,7 @@ const postsController = require('../controllers/posts');
 
 // 取得列表
 // 網址範例: http://localhost:3000/posts
+
 router.post('/', async (req, res, next) => postsController.get(req, res));
 
 // 新增

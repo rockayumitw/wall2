@@ -4,6 +4,11 @@ const usersController = require('../controllers/users');
 
 // 取得所有列表
 // 網址範例: http://localhost:3000/users
+
+/**
+ * #swagger.tags = ['Users']
+ */
+
 router.get('/', async (req, res, next) => usersController.get(req, res));
 
 // 取得 -單筆

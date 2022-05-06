@@ -3,7 +3,12 @@ const router = express.Router();
 const repliesController = require('../controllers/replies');
 
 // 取得列表
-// 網址範例: http://localhost:3000/posts
+// 網址範例: http://localhost:3000/replies
+
+/**
+ * #swagger.tags = ['replies']
+ */
+
 // router.get('/', async (req, res, next) => postsController.get(req, res));
 
 // 新增

@@ -7,10 +7,11 @@ const User = require('../models/users');
 const Replies = require('../models/replies');
 
 const posts = {
-    // 取得列表
     async get(req, res) {
-        // populate => 合併user欄位資料
-        // select => 要顯示哪幾筆資料
+        /**
+         * #swagger.tags = ['Posts - 貼文']
+         * #swagger.description = '取得全部貼文 API'
+         */
         try{
             let sort = req.body.sort;
             let search = req.body.content;
@@ -44,6 +45,9 @@ const posts = {
     },
     // 新增
     async create(req, res) {
+        /**
+        * #swagger.tags = ['Posts']
+        */
         const data = req.body
         console.log(data)
         const arg = ['user_id', 'tags', 'type', 'content']

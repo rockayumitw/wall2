@@ -19,6 +19,9 @@ const replies = {
     //         handleError(res, err.message);
     //     } 
     // },
+    /**
+     * #swagger.ignore = true
+     */
     // 新增回覆
     async create(req, res) {
         const data = req.body
