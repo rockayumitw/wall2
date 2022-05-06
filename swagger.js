@@ -6,7 +6,7 @@ const doc = {
         title: 'Meta API',
         description: '範例生成文件', // 描述此文件在做甚麼
     },
-    host: 'localhost:3000', // 注意: 目前本地端生成的api, 可以使用.env環境檔做變化
+    host: 'fathomless-taiga-19978.herokuapp.com', // 注意: 目前本地端生成的api, 可以使用.env環境檔做變化
     schemes: ['http', 'https'], // 此文件支援哪幾種模式
 }
 

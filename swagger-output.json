@@ -4,7 +4,7 @@
     "title": "Meta API",
     "description": "範例生成文件"
   },
-  "host": "localhost:3000",
+  "host": "fathomless-taiga-19978.herokuapp.com",
   "basePath": "/",
   "tags": [],
   "schemes": [
