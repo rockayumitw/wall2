@@ -8,6 +8,7 @@ const User = require('../models/users');
 const Replies = require('../models/replies');
 
 const posts = {
+    // 全部
     async get(req, res, next) {
         try{
             let sort = req.body.sort;

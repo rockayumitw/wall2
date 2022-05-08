@@ -18,33 +18,21 @@ process.on('uncaughtException', err => {
 
 // 引用env環境檔案
 // dotenv.config({path: './config.env'});
-
-if(process.env.NODE_ENV === 'production') {
-  dotenv.config({path: './production.env'});
-} else {
-  console.log(`目前運行的環境: ${process.env.NODE_ENV}`)
-  dotenv.config({path: './dev.env'});
-}
-
-console.log(`目前運行的DB: ${process.env.DATABASE}`)
+dotenv.config({path: `.env.${process.env.NODE_ENV}`});
+console.log(`目前運行的環境: ${process.env.NODE_ENV}`)
+console.log(`目前連接的DB: ${process.env.DATABASE}`)
 
 // db設定
-let DB = ''
-
-if(process.env.NODE_ENV === 'production') {
-  DB = process.env.DATABASE.replace(
-    '<password>',
-    process.env.DATABASE_PASSWORD
-  );
-} else {
-  DB = process.env.DATABASE
-}
+const DB = process.env.DATABASE.replace(
+  '<password>',
+  process.env.DATABASE_PASSWORD
+);
 
 // 連結資料庫
 mongoose
-  // .connect('mongodb://localhost:27017/wall') // 本機端
   .connect(DB)
-  .then(() => console.log('資料庫連接成功')).catch((err) => console.log('資料庫連結失敗,' + err));
+  .then(() => console.log('資料庫連接成功'))
+  .catch((err) => console.log('資料庫連結失敗,' + err));
 
 // 載入router
 const postRouter = require('./routes/posts');

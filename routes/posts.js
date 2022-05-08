@@ -6,9 +6,9 @@ const postsController = require('../controllers/posts');
 // 網址範例: http://localhost:3000/posts
 // fathomless-taiga-19978.herokuapp.com
 router.post('/', async (req, res, next) => {
-        /**
-        * #swagger.tags = ['Posts']
-        */
+    /**
+    * #swagger.tags = ['Posts']
+    */
     postsController.get(req, res, next)
 });
 
