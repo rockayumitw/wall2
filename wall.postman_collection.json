@@ -262,7 +262,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"哈囉2\",\r\n    \"email\": \"test@test.com\",\r\n    \"sex\": \"女\",\r\n    \"password\": \"123\"\r\n}",
+					"raw": "{\r\n    \"name\": \"哈囉\",\r\n    \"email\": \"test@test.com\",\r\n    \"sex\": \"女\",\r\n    \"password\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -270,7 +270,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://fathomless-taiga-19978.herokuapp.com/users/6273edda00b09a7c5d39abb4",
+					"raw": "https://fathomless-taiga-19978.herokuapp.com/users/6273edda00b09a7c5d39abb4/resetPassword",
 					"protocol": "https",
 					"host": [
 						"fathomless-taiga-19978",
@@ -279,7 +279,8 @@
 					],
 					"path": [
 						"users",
-						"6273edda00b09a7c5d39abb4"
+						"6273edda00b09a7c5d39abb4",
+						"resetPassword"
 					]
 				}
 			},
