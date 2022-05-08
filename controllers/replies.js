@@ -23,13 +23,12 @@ const replies = {
      * #swagger.ignore = true
      */
     // 新增回覆
-    async create(req, res) {
+    async create(req, res, next) {
         const data = req.body
         const arg = ['user_id', 'post_id', 'content']
         const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
         if(result.length > 0) {
-            handleError(res, `${result.toString()} 欄位不正確`);
-            return;
+            return next(appError(400, `${result.toString()} 欄位不正確`, next));
         }
         const post = await Reply.create({
             user: data.user_id,

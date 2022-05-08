@@ -2,6 +2,7 @@ const express =  require('express');
 const router = express.Router();
 const repliesController = require('../controllers/replies');
 
+const handleErrorAsync = require("../service/handleErrorAsync");
 // 取得列表
 // 網址範例: http://localhost:3000/replies
 
@@ -12,7 +13,7 @@ const repliesController = require('../controllers/replies');
 // router.get('/', async (req, res, next) => postsController.get(req, res));
 
 // 新增
-router.post('/', async (req, res, next) => repliesController.create(req, res));
+router.post('/', handleErrorAsync(async (req, res, next) => repliesController.create(req, res)));
 
 // // 刪除 -全部
 // router.delete('/', async (req, res, next) => postsController.delete(req, res))
