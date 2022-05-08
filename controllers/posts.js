@@ -1,5 +1,6 @@
 const handleSuccess = require('../handles/scuessHandle');
 const handleError = require('../handles/errorHandle');
+const appError = require('../service/appError');
 
 // model 載入
 const Post = require('../models/posts');
@@ -7,11 +8,7 @@ const User = require('../models/users');
 const Replies = require('../models/replies');
 
 const posts = {
-    async get(req, res) {
-        /**
-         * #swagger.tags = ['Posts - 貼文']
-         * #swagger.description = '取得全部貼文 API'
-         */
+    async get(req, res, next) {
         try{
             let sort = req.body.sort;
             let search = req.body.content;
@@ -44,17 +41,13 @@ const posts = {
         } 
     },
     // 新增
-    async create(req, res) {
-        /**
-        * #swagger.tags = ['Posts']
-        */
+    async create(req, res, next) {
         const data = req.body
-        console.log(data)
         const arg = ['user_id', 'tags', 'type', 'content']
         const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
         if(result.length > 0) {
-            handleError(res, `${result.toString()} 欄位不正確`);
-            return;
+            // handleError(res, `${result.toString()} 欄位不正確`);
+            return next(appError(400, `${result.toString()} 欄位不正確`, next));
         }
         const post = await Post.create({
             user: data.user_id,
@@ -69,24 +62,25 @@ const posts = {
         handleSuccess(res, post, "新增成功")
     },
     // 刪除 -全部
-    async delete(req, res) {
+    async delete(req, res, next) {
         await Post.deleteMany({});
         const posts = await Post.find();
         handleSuccess(res, posts, "刪除成功")
     },
     // 刪除 -單筆
-    async deleteQuery(req, res) {
+    async deleteQuery(req, res, next) {
         try{
             const id = req.params.id
             const result = await Post.findByIdAndDelete(id);
             const posts = await Post.find();
             result == null ? handleError(res, '無此筆id') : handleSuccess(res, posts, "刪除成功")
-        } catch(error) {
-            if(error.messageFormat == undefined) handleError(res, '無此筆id')
+        } catch(err) {
+            next(err)
+            // if(error.messageFormat == undefined) handleError(res, '無此筆id')
         }
     },
     // 編輯 -單筆
-    async editQuery(req, res) {
+    async editQuery(req, res, next) {
         try {
             const id = req.params.id
             const data = req.body

@@ -16,7 +16,9 @@
   "paths": {
     "/posts/": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Posts--"
+        ],
         "description": "",
         "parameters": [],
         "responses": {}

@@ -8,20 +8,43 @@ const mongoose = require('mongoose');
 const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
 
-// env
-dotenv.config({path: './config.env'});
+// 記錄錯誤下來, 等到服務都處理完後, 停掉該process
+process.on('uncaughtException', err => {
+  console.log('Uncaughted Exception')
+  console.log(err);
+  console.log(err.name)
+  process.exit(1);
+})
+
+// 引用env環境檔案
+// dotenv.config({path: './config.env'});
+
+if(process.env.NODE_ENV === 'production') {
+  dotenv.config({path: './production.env'});
+} else {
+  console.log(`目前運行的環境: ${process.env.NODE_ENV}`)
+  dotenv.config({path: './dev.env'});
+}
+
+console.log(`目前運行的DB: ${process.env.DATABASE}`)
 
 // db設定
-const DB = process.env.DATABASE.replace(
+let DB = ''
+
+if(process.env.NODE_ENV === 'production') {
+  DB = process.env.DATABASE.replace(
     '<password>',
     process.env.DATABASE_PASSWORD
   );
+} else {
+  DB = process.env.DATABASE
+}
 
 // 連結資料庫
 mongoose
   // .connect('mongodb://localhost:27017/wall') // 本機端
   .connect(DB)
-  .then(() => console.log('資料庫連接成功')).catch((err) => consle.log('資料庫連結失敗,' + e));
+  .then(() => console.log('資料庫連接成功')).catch((err) => console.log('資料庫連結失敗,' + err));
 
 // 載入router
 const postRouter = require('./routes/posts');
@@ -55,13 +78,19 @@ app.use((req, res, next) => {
     });
 })
 
-// 程式錯誤
+// 程式錯誤處裡
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({
       status: 'error',
-      message: '系統錯誤，請恰系統管理員'
+      message: err.message
     });
+})
+
+// 未捕捉到的 catch
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('為捕捉到的 rejection:', promise, '原因:', reason);
+  // 紀錄於 log 上
 })
 
 module.exports = app;
