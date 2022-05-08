@@ -51,7 +51,7 @@ const users = {
         return result == null ? next(appError(400, `無此筆id`, next)) :  handleSuccess(res, users, "刪除成功")
     },
     // 編輯 -單筆(暱稱修改)
-    async editQuery(req, res) {
+    async editQuery(req, res, next) {
         const id = req.params.id
         const data = req.body
         const arg = ['name', 'sex']
