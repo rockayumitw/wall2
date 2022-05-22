@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     select: false,
+    minlength: 8 // 最大8碼
   },
   image: {
     type: String,
@@ -24,13 +25,19 @@ const userSchema = new mongoose.Schema({
   },
   sex: {
     type: String,
+    enum: ['male', 'female'], // 只支援帶甚麼值
     required: [false, '性別未填選'],
-    default: ""
+    default: "female"
   },
   createAt: {
     type: Date,
     default: Date.now,
+    select: false
   },
+  role: {
+    type: String,
+    enum: ['enum', 'user', 'ads']
+  }
 },{
   versionKey: false,
 });
