@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
     select: false,
-    minlength: 8 // 最大8碼
+    minlength: 8 // 至少8碼
   },
   image: {
     type: String,
@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['enum', 'user', 'ads']
+    enum: ['admin', 'user', 'ads']
   }
 },{
   versionKey: false,

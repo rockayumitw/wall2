@@ -10,7 +10,6 @@ const User = require('../models/users');
 const users = {
     // 註冊
     async signup(req, res, next) {
-        console.log('是否有近來')
         let {email, password, confirmPassword, name} = req.body;
         // 內容不得為空
         if(!email || !password || !confirmPassword || !name) {
@@ -30,30 +29,42 @@ const users = {
         }
 
         // 加密密碼
-        password = await bcrypt.hash(req.body.password, 12);
+        password = await bcrypt.hash(req.body.password,12);
+        console.log('--加密密碼--')
+        console.log(req.body.password)
+        console.log(password)
 
         const newUser = await User.create({
             email,
             password,
             name
         });
+
         generateSendJWT(newUser, 201, res);
-        handleSuccess(res, user, "註冊成功")
     },
     // 登入
-    async signIn(req, res,next) {
+    async signIn(req, res, next) {
+        console.log(req.body)
         const { email, password } = req.body;
+        console.log(password)
         if (!email || !password) {
             return next(appError(400, '帳號密碼不可為空', next));
         }
-        // 取得信箱
+        // 取得是否有此信箱
         // .select('+password'), 原本預設資料庫回傳是沒有開啟, 如果想要開啟則可以加這一行
         const user = await User.findOne({email}).select('+password');
-        // 比較
+        console.log(user)
+        // 比較密碼是否正確
         const auth = await bcrypt.compare(password, user.password);
+        console.log('--確認密碼是否相同--')
+        console.log(password)
+        console.log(user.password)
+        // console.log(auth)
+
         if(!auth){
             return next(appError(400, '您的密碼不正確', next));
         }
+        // 比對正確再產生jwt
         generateSendJWT(user, 200, res)
     },
     // 取得使用者所有資訊

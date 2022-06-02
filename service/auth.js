@@ -14,6 +14,7 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         // Bearer 後面的空白做切割
         token = req.headers.authorization.split(' ')[1];
+        console.log(token)
     }
 
     if(!token) {
@@ -21,9 +22,10 @@ const isAuth = handleErrorAsync(async (req, res, next) => {
     }
 
     // 解密: 驗證 token 是否正確 (不需要進到資料庫即可驗證是否正確)
+    // 簽證過後, token都會過期
     const decoded = await new Promise((resolve, reject) => {
         // 參數1: 前端帶入的token
-        // 參數2: 帶入環境變數的
+        // 參數2: 帶入環境變數的混淆密碼
         jwt.verify(token, process.env.JWT_SECRET, (err, payload) => err ? reject(err) : resolve(payload))
     })
     
@@ -41,9 +43,11 @@ const generateSendJWT = (user, statusCode, res) => {
     // 參數1: PAYLOAD(存放甚麼資料進去(如: 使用者id)), 
     // 參數2: 放甚麼資訊(編碼)進去混淆, 
     // 參數3: 自訂選項(如: 過期時間)
+    console.log(process.env.JWT_SECRET)
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_DAY
     });
+    console.log(token)
     user.password = undefined;
     res.status(statusCode).json({
         status: 'success',

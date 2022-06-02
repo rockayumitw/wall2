@@ -16,8 +16,9 @@ const { isAuth } = require('../service/auth');
 router.post('/sign_up', handleErrorAsync(async (req, res, next) => usersController.signup(req, res, next)));
 
 // 登入
-router.post('/sign_in', handleErrorAsync(async (req, res, next) =>  usersController.signup(req, res, next)));
+router.post('/sign_in', handleErrorAsync(async (req, res, next) =>  usersController.signIn(req, res, next)));
 
+// 所有
 router.get('/', handleErrorAsync(async (req, res, next) => usersController.get(req, res, next)));
 
 // 取得 -單筆
@@ -33,7 +34,7 @@ router.delete('/:id', handleErrorAsync(async (req, res, next) => usersController
 router.patch('/:id', handleErrorAsync(async(req, res, next) => usersController.editQuery(req, res, next)))
 
 // 重設密碼
-router.post('/updatePassword',isAuth ,handleErrorAsync(async(req, res, next) => usersController.updatePassword(req, res, next)))
+router.post('/updatePassword', isAuth, handleErrorAsync(async(req, res, next) => usersController.updatePassword(req, res, next)))
 
 
 module.exports = router;

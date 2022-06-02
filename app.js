@@ -7,7 +7,6 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
-const bcrypt = require('bcrypt');
 
 // 記錄錯誤下來, 等到服務都處理完後, 停掉該process
 process.on('uncaughtException', err => {
