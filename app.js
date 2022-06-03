@@ -38,6 +38,7 @@ mongoose
 const postRouter = require('./routes/posts');
 const userRouter = require('./routes/users');
 const replyRouter = require('./routes/replies');
+const uploadRouter = require('./routes/upload');
 
 var app = express();
 
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/posts', postRouter);
 app.use('/users', userRouter);
 app.use('/replies', replyRouter);
+app.use('/upload', uploadRouter);
 
 // swagger 文件
 // 參數: 路徑、server、設定的檔案
@@ -67,7 +69,6 @@ app.use((req, res, next) => {
 })
 
 // 程式錯誤處裡
-
 // production 回應模式
 const resErrorProd = (err, res) => {
   if(err.isOperational) { // 是預期

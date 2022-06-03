@@ -81,7 +81,7 @@ const posts = {
         const posts = await Post.findByIdAndUpdate(id, data, { new: true});
         if(posts == null) next(appError(400, `${res} `, next))
         else handleSuccess(res, posts)
-    }
+    },
 }
 
 module.exports = posts;
