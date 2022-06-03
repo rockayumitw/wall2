@@ -286,7 +286,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"1a2a3a4a\"\r\n}",
+							"raw": "{\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"1a2a3a6a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -398,6 +398,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "圖片上傳",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDI0NzYyOCwiZXhwIjoxNjU0ODUyNDI4fQ.wOSbZ7iKEiDMGEuWJbRb0AyHmELh3uxYPM9Zh4Llcb8",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"type": "file",
+							"src": "/D:/【文件】/【自用】/貼圖/117118948_3486454764706754_3302732506586806634_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{dev}}/upload",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
