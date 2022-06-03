@@ -43,12 +43,12 @@ const generateSendJWT = (user, statusCode, res) => {
     // 參數1: PAYLOAD(存放甚麼資料進去(如: 使用者id)), 
     // 參數2: 放甚麼資訊(編碼)進去混淆, 
     // 參數3: 自訂選項(如: 過期時間)
-    console.log(process.env.JWT_SECRET)
     const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_DAY
     });
-    console.log(token)
+
     user.password = undefined;
+    
     res.status(statusCode).json({
         status: 'success',
         user: {

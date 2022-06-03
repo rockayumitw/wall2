@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, '密碼未填寫'],
     unique: true,
-    lowercase: true,
+    // lowercase: true,
     select: false,
     minlength: 8 // 至少8碼
   },

@@ -44,22 +44,16 @@ const users = {
     },
     // 登入
     async signIn(req, res, next) {
-        console.log(req.body)
         const { email, password } = req.body;
-        console.log(password)
         if (!email || !password) {
             return next(appError(400, '帳號密碼不可為空', next));
         }
         // 取得是否有此信箱
         // .select('+password'), 原本預設資料庫回傳是沒有開啟, 如果想要開啟則可以加這一行
         const user = await User.findOne({email}).select('+password');
-        console.log(user)
+
         // 比較密碼是否正確
         const auth = await bcrypt.compare(password, user.password);
-        console.log('--確認密碼是否相同--')
-        console.log(password)
-        console.log(user.password)
-        // console.log(auth)
 
         if(!auth){
             return next(appError(400, '您的密碼不正確', next));
@@ -68,35 +62,12 @@ const users = {
         generateSendJWT(user, 200, res)
     },
     // 取得使用者所有資訊
-    async get(req, res, next) {
-        const data = await User.find();
-        handleSuccess(res, data, "撈取成功")
-    },
-    // 取得 -單筆
-    async getQuery(req, res, next) {
-        const id = req.params.id
-        const user = await User.find({
-            _id: id
-        })
-        return (user.length != 0 ) ? handleSuccess(res, user, "撈取成功") : next(appError(400, `無此id`, next));
-    },
-    // 刪除 -全部
-    async delete(req, res) {
-        await User.deleteMany({});
-        const users = await User.find();
-        handleSuccess(res, users, "刪除成功")
-    },
-    // 刪除 -單筆
-    async deleteQuery(req, res, next) {
-        const id = req.params.id
-        // const result = await User.findByIdAndDelete(id);
-        const result = await User.deleteOne({user_id: id})
-        const users = await User.find();
-        return result == null ? next(appError(400, `無此筆id`, next)) :  handleSuccess(res, users, "刪除成功")
+    async getProfile(req, res, next) {
+        handleSuccess(res, req.user, "撈取成功")
     },
     // 編輯 -單筆(暱稱修改)
-    async editQuery(req, res, next) {
-        const id = req.params.id
+    async updateProfile(req, res, next) {
+        const { user } = req
         const data = req.body
         const arg = ['name', 'sex']
         const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
@@ -105,7 +76,7 @@ const users = {
             return next(appError(400, `${result.toString()} 欄位不正確`, next));
         }
 
-        const users = await User.findByIdAndUpdate(id, data, { new: true});
+        const users = await User.findByIdAndUpdate(user._id, data, { new: true});
         if(users == null) next(appError(400, `${res}`, next))
         else handleSuccess(res, users)
     },
@@ -116,6 +87,7 @@ const users = {
         if(password !== confirmPassword) {
             return next(appError('400', '密碼不一致', next));
         }
+
         // 2. 加密 -nodeJS
         newPassword = await bcrypt.hash(password, 12)
 
@@ -124,37 +96,7 @@ const users = {
             password: newPassword
         });
         generateSendJWT(user, 200, res);
-
-        // const id = req.params.id
-        // const data = req.body
-        // const arg = ['user_id', 'password']
-        // const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
-
-        // if(result.length > 0) {
-        //     return next(appError(400, `${result.toString()} 欄位不正確`, next));
-        // }
-        // // 撈取使用者資料並替換密碼
-        // console.log(data)
-        // const users = await User.findByIdAndUpdate(id, data, { new: true});
-        // if(users == null) next(appError(400, `${res} 欄位不正確`, next));
-        // else handleSuccess(res, users)
     },
-    // 編輯 -單筆(重設密碼)
-    // async resetPassword(req, res, next) {
-    //     const id = req.params.id
-    //     const data = req.body
-    //     const arg = ['user_id', 'password']
-    //     const result = await arg.filter(key => data[key] == '' || data[key] == undefined)
-
-    //     if(result.length > 0) {
-    //         return next(appError(400, `${result.toString()} 欄位不正確`, next));
-    //     }
-    //     // 撈取使用者資料並替換密碼
-    //     console.log(data)
-    //     const users = await User.findByIdAndUpdate(id, data, { new: true});
-    //     if(users == null) next(appError(400, `${res} 欄位不正確`, next));
-    //     else handleSuccess(res, users)
-    // },
 }
 
 module.exports = users;
