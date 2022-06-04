@@ -16,5 +16,6 @@ const upload = multer({
         cb(null, true)
     }
 }).any();
+// any => 所有檔案都接收
 
 module.exports = upload

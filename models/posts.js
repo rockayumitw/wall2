@@ -1,15 +1,5 @@
 const mongoose = require('mongoose');
 const postsSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: [true, '姓名未填寫']
-  },
-  replies: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Replies',
-    required: [false, '']
-  },
   tags: [
     {
       type: String,
@@ -33,20 +23,42 @@ const postsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Content 未填寫'],
   },
-  likes: {
-    type: Number,
-    default: 0
+  replies: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Replies',
+    required: [false, '']
   },
-  comments:{
-    type: Number,
-    default: 0
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: [true, '姓名未填寫']
   },
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user'
+    }
+  ]
 },{
   versionKey: false,
+  toJSON: {
+    virtuals: true
+  },
+  toObject: {
+    virtuals: true
+  },
 });
 
+// virtual: 虛擬
+// 會在doucoment偷掛一個東西上去, 可聯想成join概念
+postsSchema.virtual('comments', {
+  ref: 'Comment',
+  foreignField: 'post',
+  localField: '_id'
+})
+
 const posts = mongoose.model(
-  'Posts',
+  'Post',
   postsSchema
 );
 

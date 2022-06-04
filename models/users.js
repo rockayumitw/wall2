@@ -37,11 +37,29 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ['admin', 'user', 'ads']
-  }
+  },
+  followers: [
+    {
+      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  following: [
+    {
+      user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]
 },{
   versionKey: false,
 });
 
-const users = mongoose.model('User', userSchema);
+const users = mongoose.model('user', userSchema);
 
 module.exports = users;

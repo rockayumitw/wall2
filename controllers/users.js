@@ -97,6 +97,86 @@ const users = {
         });
         generateSendJWT(user, 200, res);
     },
+    // 取得使用者資訊
+    async getUserInfo(req, res, next) {
+        const id = req.params.id
+        const posts = await Post.find({
+            id
+        })
+        handleSuccess(res, posts, '撈取成功')
+    },
+    // 追蹤
+    async follow (req, res, next) {
+        if (req.params.id == req.user.id) {
+            return next(appError(401, '您無法追蹤自己', next))
+        }
+        await User.updateOne(
+            {
+                _id: req.user.id,
+                'following.user': { $ne: req.params.id }
+            },
+            {
+                $addToSet: { // 有此筆資料就不自動加入
+                    following: {
+                        user: req.params.id
+                    }
+                }
+            }
+        )
+        await User.updateOne(
+            {
+                _id: req.params.id,
+                'followers.user': {
+                    $ne: req.user.id
+                }
+            },
+            {
+                $addToSet: { // 有此筆資料就不自動加入
+                    followers: {
+                        user: req.params.id
+                    }
+                }
+            }
+        )
+        res.status(200).json({
+            stats: 'success', 
+            message: '已追蹤成功!'
+        })
+    },
+    // 不追蹤
+    async unFollow(req, res, next) {
+        if (req.params.id == req.user.id) {
+            return next(appError(401, '您無法取消追蹤自己', next))
+        }
+        await User.updateOne(
+            {
+                _id: req.user.id,
+            },
+            {
+                $pull: {
+                    following: {
+                        user: req.params.id
+                    }
+                }
+            }
+        )
+        await User.updateOne(
+            {
+                _id: req.params.id
+            },
+            {
+                $pull: {
+                    followers: {
+                        user: req.user.id
+                    }
+                }
+            }
+        )
+        res.status(200).json({
+            stats: 'success', 
+            message: '取消追蹤成功!'
+        })
+    }
 }
 
 module.exports = users;
