@@ -10,7 +10,7 @@
 			"name": "貼文相關",
 			"item": [
 				{
-					"name": "刪除單筆資料",
+					"name": "刪除單一貼文",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -41,12 +41,15 @@
 				},
 				{
 					"name": "取得所有列表",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDIzMjM1MSwiZXhwIjoxNjU0ODM3MTUxfQ.zwHZaQlBoZfogOXyo5YmQ3GhjPu3vzB6Nvb_fnyWH4c",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
 								"type": "text"
 							}
 						],
@@ -72,19 +75,19 @@
 					"response": []
 				},
 				{
-					"name": "新增單筆資料",
+					"name": "新增單一貼文",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDIzMjM1MSwiZXhwIjoxNjU0ODM3MTUxfQ.zwHZaQlBoZfogOXyo5YmQ3GhjPu3vzB6Nvb_fnyWH4c",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_id\": \"6273edda00b09a7c5d39abb4\",\r\n    \"tags\": \"tag1\",\r\n    \"type\": \"person\",\r\n    \"content\": \"哈囉 你好3\"\r\n}",
+							"raw": "{\r\n    \"tags\": \"tag1\",\r\n    \"type\": \"person\",\r\n    \"content\": \"哈囉 你好1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -108,24 +111,34 @@
 					"name": "刪除所有資料",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "https://fathomless-taiga-19978.herokuapp.com/posts",
-							"protocol": "https",
+							"raw": "{{dev}}/posts",
 							"host": [
-								"fathomless-taiga-19978",
-								"herokuapp",
-								"com"
+								"{{dev}}"
 							],
 							"path": [
 								"posts"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "編輯單筆資料",
+					"name": "編輯單一貼文",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -153,6 +166,30 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "取得單一貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/posts/629b8f10ae59be2e6d037f63",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"posts",
+								"629b8f10ae59be2e6d037f63"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -160,20 +197,27 @@
 			"name": "會員相關",
 			"item": [
 				{
-					"name": "撈取使用者列表",
+					"name": "登入(測試人員2)",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"test2@test.com\",\r\n    \"password\":\"1b2b3b4b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "https://fathomless-taiga-19978.herokuapp.com/users",
-							"protocol": "https",
+							"raw": "{{local}}/users/sign_in",
 							"host": [
-								"fathomless-taiga-19978",
-								"herokuapp",
-								"com"
+								"{{local}}"
 							],
 							"path": [
-								"users"
+								"users",
+								"sign_in"
 							]
 						}
 					},
@@ -186,7 +230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"哈囉\",\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"1a2a3a4a\",\r\n    \"confirmPassword\":\"1a2a3a4a\"\r\n}",
+							"raw": "{\r\n    \"name\":\"測試人員2\",\r\n    \"email\":\"test3@test.com\",\r\n    \"password\":\"1b2b3b4b\",\r\n    \"confirmPassword\":\"1b2b3b4b\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -246,7 +290,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDIzMjM1MSwiZXhwIjoxNjU0ODM3MTUxfQ.zwHZaQlBoZfogOXyo5YmQ3GhjPu3vzB6Nvb_fnyWH4c",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4YzI0YWU1OWJlMmU2ZDAzN2YzZCIsImlhdCI6MTY1NDM2MTI2MywiZXhwIjoxNjU0OTY2MDYzfQ.zBEhHMqlqfOMusuGIpsOGsJ8YiZOYe-JjGMZJLpydCQ",
 								"type": "text"
 							}
 						],
@@ -286,7 +330,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"1a2a3a4a\"\r\n}",
+							"raw": "{\r\n    \"email\":\"test@test.com\",\r\n    \"password\":\"1a2a3a5a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,19 +351,19 @@
 					"response": []
 				},
 				{
-					"name": "更新密碼",
+					"name": "重設密碼",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDIzMjI5MSwiZXhwIjoxNjU0ODM3MDkxfQ.4NeDDVBuQt55tcdflunMSS1snWMjZlAMu0UkbWR__Rk",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4YzI0YWU1OWJlMmU2ZDAzN2YzZCIsImlhdCI6MTY1NDM2MTE1NSwiZXhwIjoxNjU0OTY1OTU1fQ.-Kt2LxpqFaaIOxBLLn4200hr-KAxpUnibIeKS_9cUIE",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"password\":\"1a2a3a6a\",\r\n    \"confirmPassword\":\"1a2a3a6a\"\r\n}",
+							"raw": "{\r\n    \"password\":\"1a2a3a5a\",\r\n    \"confirmPassword\":\"1a2a3a5a\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -346,7 +390,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTk5NGQzZDM1MTM1ZWQ3NDI0M2QyNCIsImlhdCI6MTY1NDIzMjM1MSwiZXhwIjoxNjU0ODM3MTUxfQ.zwHZaQlBoZfogOXyo5YmQ3GhjPu3vzB6Nvb_fnyWH4c",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
 								"type": "text"
 							}
 						],
@@ -372,10 +416,16 @@
 					"name": "新增留言",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"user_id\":\"6273edda00b09a7c5d39abb4\",\r\n    \"post_id\":\"6273f0b13b03fd6017326b4a\",\r\n    \"content\":\"test\"\r\n}",
+							"raw": "{\r\n    \"comment\":\"test留言1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -383,21 +433,195 @@
 							}
 						},
 						"url": {
-							"raw": "https://fathomless-taiga-19978.herokuapp.com/replies",
-							"protocol": "https",
+							"raw": "{{dev}}/posts/629b8f10ae59be2e6d037f63/comment",
 							"host": [
-								"fathomless-taiga-19978",
-								"herokuapp",
-								"com"
+								"{{dev}}"
 							],
 							"path": [
-								"replies"
+								"posts",
+								"629b8f10ae59be2e6d037f63",
+								"comment"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "追蹤",
+			"item": [
+				{
+					"name": "追蹤",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/users/629b8c24ae59be2e6d037f3d/follow",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"users",
+								"629b8c24ae59be2e6d037f3d",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/users/629b8c24ae59be2e6d037f3d/unfollow",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"users",
+								"629b8c24ae59be2e6d037f3d",
+								"unfollow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人追蹤列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2NDgxNywiZXhwIjoxNjU0OTY5NjE3fQ.WCprkOFI5PYyloEyjc5PQgq5NAFjyY-HjDMQwK27PHw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/users/following",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"users",
+								"following"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "點讚相關",
+			"item": [
+				{
+					"name": "點讚",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2MTQ5OCwiZXhwIjoxNjU0OTY2Mjk4fQ.12yqxJC5CSXzP-ZtAg2q6pGiL9r2BX9El3OOqphh8CE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/posts/629b8f10ae59be2e6d037f63/likes",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"posts",
+								"629b8f10ae59be2e6d037f63",
+								"likes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "點讚列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4ZDc5YWU1OWJlMmU2ZDAzN2Y0YiIsImlhdCI6MTY1NDM2NDgxNywiZXhwIjoxNjU0OTY5NjE3fQ.WCprkOFI5PYyloEyjc5PQgq5NAFjyY-HjDMQwK27PHw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/users/getLikeList",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"users",
+								"getLikeList"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "圖片上傳",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWI4YzI0YWU1OWJlMmU2ZDAzN2YzZCIsImlhdCI6MTY1NDM2NTk3NiwiZXhwIjoxNjU0OTcwNzc2fQ.GpWvQprRdZ36uK94-k1fmmzd2_2PxNN6LcyL4lU1SXo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"type": "file",
+							"src": "/D:/【文件】/【自用】/貼圖/117118948_3486454764706754_3302732506586806634_n.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{dev}}/upload",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
