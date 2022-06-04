@@ -6,6 +6,7 @@ const { generateSendJWT } = require('../service/auth');
 
 // model 載入
 const User = require('../models/users');
+const Post = require('../models/posts');
 
 const users = {
     // 註冊
@@ -175,6 +176,38 @@ const users = {
         res.status(200).json({
             stats: 'success', 
             message: '取消追蹤成功!'
+        })
+    },
+    // 取得點讚列表
+    async getLikeList(req, res, next) {
+        // $in 尋找陣列有沒有相同的資料
+        const likeList = await Post.find({
+            likes: {
+                $in: [req.user.id]
+            }
+        }).populate({
+            path: "user",
+            select: "name _id"
+        });
+        res.status(200).json({
+            status: 'success',
+            likeList
+        })
+    },
+    // 取得追蹤列表
+    async getFollowing(req, res, next) {
+        const querys = await User.find({
+            following: {
+                $in: [req.user.id]
+            }
+        }).populate({
+            path: "user",
+            select: "name _id"
+        });
+        console.log(querys)
+        res.status(200).json({
+            status: 'success',
+            querys
         })
     }
 }

@@ -15,10 +15,10 @@ router.post('/sign_up', handleErrorAsync(async (req, res, next) => usersControll
 // 登入
 router.post('/sign_in', handleErrorAsync(async (req, res, next) =>  usersController.signIn(req, res, next)));
 
-// 取得 -單筆
+// 取得個人資料
 router.get('/profile', isAuth, handleErrorAsync(async (req, res, next) => usersController.getProfile(req, res, next)));
 
-// 編輯 -單筆
+// 編輯個人資料
 router.patch('/profile', isAuth, handleErrorAsync(async(req, res, next) => usersController.updateProfile(req, res, next)))
 
 // 重設密碼
@@ -33,5 +33,10 @@ router.post('/:id/follow', isAuth, handleErrorAsync(async(req, res, next) => use
 // 取消追蹤
 router.delete('/:id/unfollow', isAuth, handleErrorAsync(async(req, res, next) => usersController.unFollow(req, res, next)))
 
+// 取得追蹤列表 
+router.get('/following', isAuth, handleErrorAsync(async(req, res, next) => usersController.getFollowing(req, res, next)))
+
+// 取得點讚列表 
+router.get('/getLikeList', isAuth, handleErrorAsync(async(req, res, next) => postsController.getLikeList(req, res, next)));
 
 module.exports = router;

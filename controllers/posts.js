@@ -22,7 +22,8 @@ const posts = {
           }).sort(timeSort);
         handleSuccess(res, data, "撈取成功")
     },
-    async query (res, data, next){
+    // 取得單一篇貼文
+    async getQuery (res, req, next){
         const id = req.params.id
         data = await Post.find(id)
         handleSuccess(res, data, "撈取成功")
@@ -100,22 +101,6 @@ const posts = {
             status: 'success',
             postId: _id,
             userId: req.user.id
-        })
-    },
-    // 取得點讚列表
-    async getLikeList(req, res, next) {
-        // $in 尋找陣列有沒有相同的資料
-        const likeList = await Post.find({
-            likes: {
-                $in: [req.user.id]
-            }
-        }).populate({
-            path: "user",
-            select: "name _id"
-        });
-        res.status(200).json({
-            status: 'success',
-            likeList
         })
     },
     // 留言
